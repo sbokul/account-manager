@@ -62,11 +62,11 @@
         <div class="col-xs-12">
             <div style="width:90%;margin: 0px auto 0;">
                 <div>
-                    <h1>Projects</h1>
+                    <h1 class="text-success">Projects</h1>
                 </div>
                 <div class="clearfix"></div>
                 <div style="margin: 0 0 10px 0;width: 100%">
-                    <button type="button" class="btn btn-success">Add New Project</button>
+                    <a href="add-new-project.php" class="btn btn-success">Add New Project</a>
                 </div>
                 <div class="clearfix"></div>
                 <div class="table-responsive">
