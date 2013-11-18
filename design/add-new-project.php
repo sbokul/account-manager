@@ -66,7 +66,7 @@
                 </div>
                 <div class="clearfix"></div>
                 <div style="margin-top: 20px;">
-                    <form class="form-horizontal" role="form">
+                    <form class="form-horizontal" role="form" method="post">
                         <div class="form-group">
                             <label for="projectName" class="col-sm-2 control-label">Project Name</label>
                             <div class="col-sm-10">
@@ -83,6 +83,12 @@
                             <label for="workOrderAmount" class="col-sm-2 control-label">Work Order Amount</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" name="workOrderAmount" id="workOrderAmount" placeholder="Work Order Amount">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="date" class="col-sm-2 control-label">Date</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="date" id="date" placeholder="Date">
                             </div>
                         </div>
                         <div class="form-group">
