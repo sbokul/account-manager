@@ -1,11 +1,9 @@
-    <div class="container">
-        <footer>
-            <div class="row">
-                <div class="col-xs-12 footer">
-                    <p>Copyright &copy; Club Asia 2013 </p>
-                </div>
+<footer>
+    <div style="margin-top: 100px;">
+        <div class="row">
+            <div class="col-xs-12" style="height: 50px;background-color: #222222;padding: 10px;color: #fff;">
+                Copyright 2014
             </div>
-        </footer>
+        </div>
     </div>
-    </body>
-</html>
+</footer>

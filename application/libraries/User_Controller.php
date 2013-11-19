@@ -10,7 +10,7 @@ class User_Controller extends CI_Controller {
         {
             $msg = array(
                 'status' => false,
-                'class' => 'errormsgbox',
+                'class' => 'alert alert-danger',
                 'msg' => 'To access this page please login.'
             );
 
@@ -21,14 +21,14 @@ class User_Controller extends CI_Controller {
         }
         $this->template->set_template('user');
         //$template['active_template'] = 'user';
-		$this->set_temlates();
+		$this->set_templates();
     }
 	
-	public function set_temlates(){
+	public function set_templates(){
         $user_info = $this->session->userdata('user_info');
-        $this->load->model('userpanel_model');
+        $this->load->model('dashboard_model');
         $user_id = $user_info['user_id'];
-        $data['user_info'] = $this->userpanel_model->user_data($user_id);
+        $data['user_info'] = $this->dashboard_model->user_data($user_id);
 		$this->template->write_view('header', 'template/user/header',array('data' => $data));
 		$this->template->write_view('left_menu', 'template/user/left-menu',array());
         $this->template->write_view('left_menu_mobile', 'template/user/left-menu-mobile',array());

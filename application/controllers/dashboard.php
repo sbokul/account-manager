@@ -119,12 +119,9 @@ class Dashboard extends User_Controller
         $data = null;
         $error = null;
         $title = 'Dashboard';
-        $this->load->model('userpanel_model');
+        $this->load->model('dashboard_model');
         $data = $this->session->userdata('user_info');
         $user_id = $data['user_id'];
-        $data = $this->userpanel_model->user_data($data['user_id']);
-        $data['got_donation'] = $this->userpanel_model->who_got_donation();
-        $data['given_donation'] = $this->userpanel_model->who_given_donation();
         $this->template->write_view('content', 'template/user/pages/home', array('data' => $data, 'error' => $error, 'title' => $title));
         $this->template->render();
 

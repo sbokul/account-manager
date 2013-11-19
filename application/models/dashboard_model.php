@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Userpanel_model extends CI_Model
+class Dashboard_model extends CI_Model
 {
 
     protected $errors;
@@ -24,7 +24,7 @@ class Userpanel_model extends CI_Model
 
     public function user_data($user_id)
     {
-        $query = $this->db->get_where('user_reg', array('user_id' => $user_id));
+        $query = $this->db->get_where('users', array('user_id' => $user_id));
         $user_info = $query->row_array();
         return $user_info;
     }

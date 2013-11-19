@@ -30,32 +30,20 @@ class Login extends My_Controller {
             if($this->user_model->login_check($data))
             {
                 $msg = array(
-                    'status' => true,
-                    'class' => 'successbox',
-                    'msg' => 'Login Succesfully successfully.'
+                    'status' => false,
+                    'class' => 'alert alert-success',
+                    'msg' => 'Logged in Successfully.'
                 );
 
                 $data = json_encode($msg);
 
-                redirect('/userpanel');
-
-                $this->session->set_flashdata('msg', $data);
-            } else if($this->user_model->admin_login_check($data)) {
-                $msg = array(
-                    'status' => true,
-                    'class' => 'successbox',
-                    'msg' => 'Login Succesfully successfully.'
-                );
-
-                $data = json_encode($msg);
-
-                redirect('/admin');
+                redirect('/dashboard');
 
                 $this->session->set_flashdata('msg', $data);
             } else {
                 $msg = array(
                     'status' => false,
-                    'class' => 'errormsgbox',
+                    'class' => 'alert alert-danger',
                     'msg' => 'Login failed please try again.'
                 );
 
@@ -68,15 +56,9 @@ class Login extends My_Controller {
     }
 
     public function logout()
-    {  
-	    //$this->load->model('userpanel_model');
-        //$data = $this->session->userdata('user_info');
-        //$user_id = $data['user_id'];
-		//if($this->userpanel_model->user_login_data($user_id)){
+    {
 		$this->session->unset_userdata('user_info');
-		$this->session->unset_userdata('user_modify');
         redirect('/');
-		//}
     }
 	
 	public function forgetpassword()
