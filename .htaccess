@@ -1,0 +1,9 @@
+RewriteEngine on
+
+#RewriteCond %{HTTP_HOST} ^ec2-184-72-11-173\.us-west-1\.compute\.amazonaws\.com$ [NC]
+#RewriteRule ^(.*)$ http://www\.introme\.co/$1 [L,R=301]
+RewriteCond $1 !^(index\.php|assets|resources|robots\.txt|server-status|uploads|cgp|collectd-web)
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+#RewriteRule ^(.*)$ maintenance.php [L,QSA]
