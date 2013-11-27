@@ -6,7 +6,7 @@
             </div>
             <div class="clearfix"></div>
             <div style="margin: 0 0 10px 0;width: 100%">
-                <a href="add-new-project.php" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add New Project</a>
+                <a href="/dashboard/add-new-project" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add New Project</a>
             </div>
             <div class="clearfix"></div>
             <div class="table-responsive">
