@@ -11,6 +11,15 @@ class Dashboard_model extends CI_Model
         $this->load->database();
     }
 
+    public function save_project($post_data)
+    {
+        $status = false;
+        $this->db->set($post_data);
+        if($this->db->insert('projects'))
+            $status = true;
+        return $status;
+    }
+
     public function user_update($userid, $data)
     {
         $status = false;

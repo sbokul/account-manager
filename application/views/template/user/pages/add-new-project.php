@@ -6,29 +6,36 @@
             </div>
             <div class="clearfix"></div>
             <div style="margin-top: 20px;">
-                <form class="form-horizontal" role="form" method="post">
+                <?php
+                $msg = $this->session->flashdata('msg');
+                if (!empty($msg)) {
+                    $msg = json_decode($msg, 1);
+                    echo '<div class="' . $msg['class'] . '"><button type="button" class="close" data-dismiss="alert">×</button>' . $msg['msg'] . '</div>';
+                }
+                ?>
+                <form class="form-horizontal" role="form" method="post" action="/dashboard/save-project">
                     <div class="form-group">
                         <label for="projectName" class="col-sm-2 control-label">Project Name</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="projectName" id="projectName" placeholder="Project Name">
+                            <input type="text" class="form-control" name="project_name" id="projectName" placeholder="Project Name">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="workName" class="col-sm-2 control-label">Name Of Work</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="workName" id="workName" placeholder="Name Of Work">
+                            <input type="text" class="form-control" name="work_name" id="workName" placeholder="Name Of Work">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="workOrderAmount" class="col-sm-2 control-label">Work Order Amount</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="workOrderAmount" id="workOrderAmount" placeholder="Work Order Amount">
+                            <input type="text" class="form-control" name="work_order_amount" id="workOrderAmount" placeholder="Work Order Amount">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="date" class="col-sm-2 control-label">Date</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="date" id="date" placeholder="Date">
+                            <input type="text" class="form-control" name="create_date" id="date" placeholder="Date">
                         </div>
                     </div>
                     <div class="form-group">

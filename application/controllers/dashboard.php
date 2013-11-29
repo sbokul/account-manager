@@ -25,6 +25,9 @@ class Dashboard extends User_Controller
             case 'add-new-project':
                 $this->add_new_project();
                 break;
+            case 'save-project':
+                $this->save_project();
+                break;
             default:
                 $this->page_not_found();
                 break;
@@ -56,6 +59,35 @@ class Dashboard extends User_Controller
         $user_id = $data['user_id'];
         $this->template->write_view('content', 'template/user/pages/add-new-project', array('data' => $data, 'error' => $error, 'title' => $title));
         $this->template->render();
+    }
 
+    public function save_project()
+    {
+
+        $post_data = $this->input->post();
+        echo "<pre>";
+        print_r($post_data);
+        echo "</pre>";
+        $this->load->model('dashboard_model');
+        if ($this->dashboard_model->save_project($post_data)) {
+            $msg = array(
+                'status' => false,
+                'class' => 'alert alert-success',
+                'msg' => 'Data saved successfully.'
+            );
+
+            $data = json_encode($msg);
+            $this->session->set_flashdata('msg', $data);
+        } else {
+            $msg = array(
+                'status' => false,
+                'class' => 'alert alert-danger',
+                'msg' => 'Problem in saving data. Please try again later.'
+            );
+
+            $data = json_encode($msg);
+            $this->session->set_flashdata('msg', $data);
+        }
+        redirect('/dashboard/add-new-project');
     }
 }
