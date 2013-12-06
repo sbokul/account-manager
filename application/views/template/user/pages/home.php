@@ -13,109 +13,35 @@
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
-                        <th>Table heading</th>
+                        <th>Project Name</th>
+                        <th>Work Name</th>
+                        <th>Work Order Amount</th>
+                        <th>Create Date</th>
+                        <th>View Details</th>
+                        <th>Add Bill</th>
+                        <th>Add Expense</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                        <td>Table cell</td>
-                    </tr>
+                    <?php
+                    foreach ($data['projects'] as $project) {
+                        echo '<tr>';
+                        echo '<td>'.$project['project_name'].'</td>';
+                        echo '<td>'.$project['work_name'].'</td>';
+                        echo '<td>'.$project['work_order_amount'].'</td>';
+                        echo '<td>'.$project['create_date'].'</td>';
+                        echo '<td align="center"><a href="/dashboard/project-details/'.$project['id'].'">View Details</td>';
+                        echo '<td align="center"><a href="/dashboard/add-bill/'.$project['id'].'">Add Bill</td>';
+                        echo '<td align="center"><a href="/dashboard/add-expense/'.$project['id'].'">Add Bill</td>';
+                        echo '<td align="center"><a href="/dashboard/edit/'.$project['id'].'"><span class="glyphicon glyphicon-pencil text-primary"></span></a>&nbsp;&nbsp;&nbsp;<a href="/dashboard/delete/'.$project['id'].'"><span class="glyphicon glyphicon-remove text-danger"></span></a></td>';
+                        echo '</tr>';
+                    }
+
+                    ?>
                     </tbody>
                 </table>
-                <ul class="pagination">
-                    <li><a href="#">&laquo;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">&raquo;</a></li>
-                </ul>
-
+                <div><?php echo $this->pagination->create_links(); ?></div>
             </div>
 
         </div>

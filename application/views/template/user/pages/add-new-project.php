@@ -15,6 +15,12 @@
                 ?>
                 <form class="form-horizontal" role="form" method="post" action="/dashboard/save-project">
                     <div class="form-group">
+                        <label for="date" class="col-sm-2 control-label">Date</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="create_date" id="date" placeholder="Date">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="projectName" class="col-sm-2 control-label">Project Name</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="project_name" id="projectName" placeholder="Project Name">
@@ -33,12 +39,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="date" class="col-sm-2 control-label">Date</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="create_date" id="date" placeholder="Date">
-                        </div>
-                    </div>
-                    <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-success">Save</button>
                             <button type="reset" class="btn btn-danger">Cancel</button>
@@ -50,3 +50,8 @@
         </div>
     </div>
 </div>
+<script>
+    $('#date').datepicker({
+        format: 'yyyy-mm-dd'
+    });
+</script>

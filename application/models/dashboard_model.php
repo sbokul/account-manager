@@ -38,214 +38,26 @@ class Dashboard_model extends CI_Model
         return $user_info;
     }
 
-    public function save_donation($user_id, $no_of_donations)
-    {
-        $status = false;
-        $total_amount = $no_of_donations * 10;
-
-        $this->db->simple_query("UPDATE `user_reg` SET `current_balance` = current_balance - $total_amount, `donation_count` = `donation_count` + $no_of_donations WHERE `user_reg`.`user_id` = $user_id;");
-
-        for ($i = 0; $i < $no_of_donations; ++$i) {
-            $this->db->select('tracking_id');
-            $this->db->from('donations');
-            $this->db->order_by("id", "desc");
-            $this->db->limit(1);
-            $query = $this->db->get();
-            $data = $query->row_array();
-
-            $new_tracking_id = $data['tracking_id'] + 1;
-
-            $params = array(
-                'tracking_id' => $new_tracking_id,
-                'user_id' => $user_id,
-                'amount' => 10,
-                'create_date' => date('Y-m-d')
-            );
-            $this->db->set($params);
-            if ($this->db->insert('donations'))
-                $status = true;
-
-            $param_transaction = array(
-                'user_id' => $user_id,
-                'head' => 'Donate $10 tracking id ' . $new_tracking_id,
-                'amount' => 10,
-                'type' => 'Donate',
-                'in_out' => 0,
-                'create_date' => date('Y-m-d')
-            );
-            $this->db->set($param_transaction);
-            $this->db->insert('transaction');
-
-            if ($status == true) {
-                $this->bonus_sharing($new_tracking_id);
-                $this->bonus_sharing_to_parent($user_id, $new_tracking_id);
-            }
-        }
-
-        return $status;
-    }
-
-    public function save_upgradation($user_id)
-    {
-        $status = false;
-        if ($this->db->simple_query("UPDATE `user_reg` SET `current_balance` = current_balance - 20, `user_status` = 1 WHERE `user_reg`.`user_id` = $user_id;"))
-            $status = true;
-        return $status;
-
-    }
-
-    private function bonus_sharing($tracking_id)
-    {
-        if ($tracking_id >= 2 and $tracking_id % 2 == 0) {
-            $bonus_tracking_id = $tracking_id / 2;
-            $this->db->select('user_id');
-            $this->db->from('donations');
-            $this->db->where('tracking_id', $bonus_tracking_id);
-            $this->db->limit(1);
-            $query = $this->db->get();
-            $data = $query->row_array();
-
-            $cur_date = date('Y-m-d');
-
-            $this->db->simple_query("UPDATE `user_reg` SET `current_balance` = current_balance + 15 WHERE `user_reg`.`user_id` = " . $data['user_id'] . ";");
-            $this->db->simple_query("UPDATE `donations` SET `status` = 1, qualify_date = '" . $cur_date . "' WHERE `donations`.`tracking_id` = " . $bonus_tracking_id . ";");
-
-            $params = array(
-                'user_id' => $data['user_id'],
-                'head' => 'Got $15 bonus for tracking id ' . $bonus_tracking_id . '',
-                'amount' => 10,
-                'tracking_id_for' => $tracking_id,
-                'type' => 'Tracking Bonus',
-                'in_out' => 1,
-                'tracking_id_got' => $bonus_tracking_id,
-                'create_date' => date('Y-m-d')
-            );
-
-            $this->db->set($params);
-            $this->db->insert('transaction');
-            return true;
-        }
-    }
-
-    private function select_parent_info($user_id)
+    public function get_projects_number()
     {
         $this->db->select('*');
-        $this->db->from('user_reg');
-        $this->db->where('user_id', $user_id);
-        $this->db->limit(1);
+        $this->db->from('projects');
         $query = $this->db->get();
-        $data = $query->row_array();
+        $row_count = $query->num_rows();
+        return $row_count;
+    }
+
+    public function get_projects($no_of_item, $row)
+    {
+        $this->db->select('*');
+        $this->db->from('projects');
+        $this->db->order_by("id", "desc");
+        $this->db->limit($no_of_item, $row);
+        $query = $this->db->get();
+        $data = $query->result_array();
+        //echo $this->db->last_query();
         return $data;
     }
-
-    private function select_parent_id($user_id)
-    {
-        $this->db->select('parent_id');
-        $this->db->from('user_reg');
-        $this->db->where('user_id', $user_id);
-        $this->db->limit(1);
-        $query = $this->db->get();
-        $data = $query->row_array();
-        if (empty($data['parent_id'])) {
-            $parent_id = 0;
-        } else {
-            $parent_id = $data['parent_id'];
-        }
-
-        return $parent_id;
-    }
-
-    private function bonus_sharing_to_parent($user_id, $new_tracking_id)
-    {
-
-        ////////////////////////1st Parent/////////////////////////////////////////
-        $parent_id = $this->select_parent_id($user_id);
-        if ($parent_id === 0) {
-            return true;
-        }
-        $parent_data = $this->select_parent_info($parent_id);
-
-
-        ///////////////////////For 10% bonus to referrer
-        $params = array(
-            'user_id' => $parent_data['user_id'],
-            'head' => 'Got 10% Referrer bonus for tracking id ' . $new_tracking_id . '',
-            'amount' => '1.00',
-            'tracking_id_for' => $new_tracking_id,
-            'in_out' => 1,
-            'type' => 'Referrer Bonus',
-            'tracking_id_got' => 0,
-            'create_date' => date('Y-m-d')
-        );
-        $this->db->set($params);
-        $this->db->insert('transaction');
-        $this->db->simple_query("UPDATE `user_reg` SET `current_balance` = current_balance + 1.00 WHERE `user_reg`.`user_id` = " . $parent_data['user_id'] . ";");
-
-
-        if ($parent_data['user_status'] == 1) {
-            $params = array(
-                'user_id' => $parent_data['user_id'],
-                'head' => 'Got 3% bonus for tracking id ' . $new_tracking_id . '',
-                'amount' => '0.30',
-                'tracking_id_for' => $new_tracking_id,
-                'in_out' => 1,
-                'type' => 'Donation Bonus',
-                'tracking_id_got' => 0,
-                'create_date' => date('Y-m-d')
-            );
-            $this->db->set($params);
-            $this->db->insert('transaction');
-            $this->db->simple_query("UPDATE `user_reg` SET `current_balance` = current_balance + 0.3 WHERE `user_reg`.`user_id` = " . $parent_data['user_id'] . ";");
-        }
-        ///////////////////2nd Parent///////////////////////////////////////////////
-
-        $parent_id = $this->select_parent_id($parent_id);
-        if ($parent_id === 0) {
-            return true;
-        }
-        $parent_data = $this->select_parent_info($parent_id);
-
-        if ($parent_data['user_status'] == 1) {
-            $params = array(
-                'user_id' => $parent_data['user_id'],
-                'head' => 'Got 2% bonus for tracking id ' . $new_tracking_id . '',
-                'amount' => '0.20',
-                'tracking_id_for' => $new_tracking_id,
-                'in_out' => 1,
-                'type' => 'Donation Bonus',
-                'tracking_id_got' => 0,
-                'create_date' => date('Y-m-d')
-            );
-            $this->db->set($params);
-            $this->db->insert('transaction');
-            $this->db->simple_query("UPDATE `user_reg` SET `current_balance` = current_balance + 0.2 WHERE `user_reg`.`user_id` = " . $parent_data['user_id'] . ";");
-        }
-
-
-        ///////////////////3nd Parent///////////////////////////////////////////////
-        $parent_id = $this->select_parent_id($parent_id);
-        if ($parent_id === 0) {
-            return true;
-        }
-        $parent_data = $this->select_parent_info($parent_id);
-        if ($parent_data['user_status'] == 1) {
-            $params = array(
-                'user_id' => $parent_data['user_id'],
-                'head' => 'Got 1% bonus for tracking id ' . $new_tracking_id . '',
-                'amount' => '0.10',
-                'tracking_id_for' => $new_tracking_id,
-                'in_out' => 1,
-                'type' => 'Donation Bonus',
-                'tracking_id_got' => 0,
-                'create_date' => date('Y-m-d')
-            );
-            $this->db->set($params);
-            $this->db->insert('transaction');
-            $this->db->simple_query("UPDATE `user_reg` SET `current_balance` = current_balance + 0.1 WHERE `user_reg`.`user_id` = " . $parent_data['user_id'] . ";");
-        }
-        return true;
-    }
-
 
     public function get_donation_list($user_id, $row, $no_of_item)
     {

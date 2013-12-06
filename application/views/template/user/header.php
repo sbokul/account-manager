@@ -26,8 +26,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="projects">Projects <span class="caret"></span></a>
                     <ul class="dropdown-menu" aria-labelledby="projects">
-                        <li><a tabindex="-1" href="./bootstrap.min.css">View Projects</a></li>
-                        <li><a tabindex="-1" href="./bootstrap.min.css">Add New Project</a></li>
+                        <li><a tabindex="-1" href="/dashboard">View Projects</a></li>
+                        <li><a tabindex="-1" href="/dashboard/add-new-project">Add New Project</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
