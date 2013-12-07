@@ -13,17 +13,17 @@
                     echo '<div class="' . $msg['class'] . '"><button type="button" class="close" data-dismiss="alert">×</button>' . $msg['msg'] . '</div>';
                 }
                 ?>
-                <form class="form-horizontal" role="form" method="post" action="/dashboard/save-expense">
+                <form class="form-horizontal" role="form" method="post" action="/dashboard/save-expense" id="add_expense">
+                    <div class="form-group">
+                        <label for="projectName" class="col-sm-2 control-label">Particulars</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control typeahead" name="particulars" id="particulars" placeholder="Particulars">
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="date" class="col-sm-2 control-label">Date</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="create_date" id="date" placeholder="Date">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="projectName" class="col-sm-2 control-label">Particulars</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="particulars" id="particulars" placeholder="Particulars">
                         </div>
                     </div>
                     <div class="form-group">
@@ -51,8 +51,27 @@
         </div>
     </div>
 </div>
+
+<script src="/assets/js/typeahead.min.js"></script>
 <script>
-    $('#date').datepicker({
-        format: 'yyyy-mm-dd'
+    $(document).ready(function() {
+        $('#date').datepicker({
+            format: 'yyyy-mm-dd'
+        });
+
+        $('.typeahead').typeahead({
+            name: 'particulars',
+            local: <?php echo json_encode($data['particulars']); ?>,
+            limit: 10
+        });
+
+        $("#add_expense").validate({
+            rules: {
+                particulars: {required:true},
+                create_date: {required:true, date: true},
+                amount: {required:true, number: true},
+                voucher_no: {required:true}
+            }
+        });
     });
 </script>

@@ -77,6 +77,46 @@ class Dashboard_model extends CI_Model
         return $status;
     }
 
+    public function get_particulars($project_id)
+    {
+        $this->db->select('particulars');
+        $this->db->from('expenses');
+        $this->db->where('project_id', $project_id);
+        $query = $this->db->get();
+        $particulars = $query->result_array();
+        return $particulars;
+    }
+
+    public function get_project_detail($id)
+    {
+        $this->db->select('*');
+        $this->db->from('projects');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+        $project_detail = $query->result_array();
+        return $project_detail[0];
+    }
+
+    public function get_project_bill($id)
+    {
+        $this->db->select('*');
+        $this->db->from('bills');
+        $this->db->where('project_id', $id);
+        $query = $this->db->get();
+        $project_bill = $query->result_array();
+        return $project_bill;
+    }
+
+    public function get_project_expense($id)
+    {
+        $this->db->select('*');
+        $this->db->from('expenses');
+        $this->db->where('project_id', $id);
+        $query = $this->db->get();
+        $project_expense = $query->result_array();
+        return $project_expense;
+    }
+
 }
 
 

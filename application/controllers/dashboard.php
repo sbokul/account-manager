@@ -40,6 +40,9 @@ class Dashboard extends User_Controller
             case 'save-expense':
                 $this->save_expense();
                 break;
+            case 'project-details':
+                $this->project_details();
+                break;
             default:
                 $this->page_not_found();
                 break;
@@ -185,6 +188,17 @@ class Dashboard extends User_Controller
         $this->load->model('dashboard_model');
         $data = $this->session->userdata('user_info');
         $data['id'] = $id;
+
+        $particulars = $this->dashboard_model->get_particulars($id);
+
+        $new_array = array();
+        foreach ($particulars as $particular) {
+            $new_array[] = $particular['particulars'];
+        }
+
+        $data['particulars'] = $new_array;
+
+
         $user_id = $data['user_id'];
         $this->template->write_view('content', 'template/user/pages/add-expense', array('data' => $data, 'error' => $error, 'title' => $title));
         $this->template->render();
@@ -215,6 +229,30 @@ class Dashboard extends User_Controller
             $this->session->set_flashdata('msg', $data);
         }
         redirect('/dashboard/add-expense/'.$id);
+    }
+
+    public function project_details()
+    {
+        $id = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        if($id == 0) {
+            redirect('/dashboard');
+        }
+        $data = null;
+        $error = null;
+        $title = 'Project Detail';
+        $this->load->model('dashboard_model');
+        $data = $this->session->userdata('user_info');
+        $data['id'] = $id;
+
+        $data['project_detail'] = $this->dashboard_model->get_project_detail($id);
+
+        $data['project_bill'] = $this->dashboard_model->get_project_bill($id);
+
+        $data['project_expense'] = $this->dashboard_model->get_project_expense($id);
+
+        $this->template->write_view('content', 'template/user/pages/project-detail', array('data' => $data, 'error' => $error, 'title' => $title));
+        $this->template->render();
+
     }
 
 }
