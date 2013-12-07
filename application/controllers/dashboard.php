@@ -28,6 +28,18 @@ class Dashboard extends User_Controller
             case 'save-project':
                 $this->save_project();
                 break;
+            case 'add-bill':
+                $this->add_bill();
+                break;
+            case 'save-bill':
+                $this->save_bill();
+                break;
+            case 'add-expense':
+                $this->add_expense();
+                break;
+            case 'save-expense':
+                $this->save_expense();
+                break;
             default:
                 $this->page_not_found();
                 break;
@@ -93,9 +105,6 @@ class Dashboard extends User_Controller
     {
 
         $post_data = $this->input->post();
-        echo "<pre>";
-        print_r($post_data);
-        echo "</pre>";
         $this->load->model('dashboard_model');
         if ($this->dashboard_model->save_project($post_data)) {
             $msg = array(
@@ -118,4 +127,94 @@ class Dashboard extends User_Controller
         }
         redirect('/dashboard/add-new-project');
     }
+
+    public function add_bill()
+    {
+        $id = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        if($id == 0) {
+            redirect('/dashboard');
+        }
+        $this->load->helper('form');
+        $data = null;
+        $error = null;
+        $title = 'Add Bill';
+        $this->load->model('dashboard_model');
+        $data = $this->session->userdata('user_info');
+        $data['id'] = $id;
+        $user_id = $data['user_id'];
+        $this->template->write_view('content', 'template/user/pages/add-bill', array('data' => $data, 'error' => $error, 'title' => $title));
+        $this->template->render();
+    }
+
+    public function save_bill()
+    {
+        $post_data = $this->input->post();
+        $this->load->model('dashboard_model');
+        if ($this->dashboard_model->save_bill($post_data)) {
+            $msg = array(
+                'status' => false,
+                'class' => 'alert alert-success',
+                'msg' => 'Data saved successfully.'
+            );
+
+            $data = json_encode($msg);
+            $this->session->set_flashdata('msg', $data);
+        } else {
+            $msg = array(
+                'status' => false,
+                'class' => 'alert alert-danger',
+                'msg' => 'Problem in saving data. Please try again later.'
+            );
+
+            $data = json_encode($msg);
+            $this->session->set_flashdata('msg', $data);
+        }
+        redirect('/dashboard');
+    }
+
+    public function add_expense()
+    {
+        $id = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        if($id == 0) {
+            redirect('/dashboard');
+        }
+        $this->load->helper('form');
+        $data = null;
+        $error = null;
+        $title = 'Add Expense';
+        $this->load->model('dashboard_model');
+        $data = $this->session->userdata('user_info');
+        $data['id'] = $id;
+        $user_id = $data['user_id'];
+        $this->template->write_view('content', 'template/user/pages/add-expense', array('data' => $data, 'error' => $error, 'title' => $title));
+        $this->template->render();
+    }
+
+    public function save_expense()
+    {
+        $post_data = $this->input->post();
+        $id = $post_data['project_id'];
+        $this->load->model('dashboard_model');
+        if ($this->dashboard_model->save_expense($post_data)) {
+            $msg = array(
+                'status' => false,
+                'class' => 'alert alert-success',
+                'msg' => 'Data saved successfully.'
+            );
+
+            $data = json_encode($msg);
+            $this->session->set_flashdata('msg', $data);
+        } else {
+            $msg = array(
+                'status' => false,
+                'class' => 'alert alert-danger',
+                'msg' => 'Problem in saving data. Please try again later.'
+            );
+
+            $data = json_encode($msg);
+            $this->session->set_flashdata('msg', $data);
+        }
+        redirect('/dashboard/add-expense/'.$id);
+    }
+
 }

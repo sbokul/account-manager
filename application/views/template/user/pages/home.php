@@ -9,6 +9,13 @@
                 <a href="/dashboard/add-new-project" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add New Project</a>
             </div>
             <div class="clearfix"></div>
+            <?php
+            $msg = $this->session->flashdata('msg');
+            if (!empty($msg)) {
+                $msg = json_decode($msg, 1);
+                echo '<div class="' . $msg['class'] . '"><button type="button" class="close" data-dismiss="alert">×</button>' . $msg['msg'] . '</div>';
+            }
+            ?>
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
@@ -33,7 +40,7 @@
                         echo '<td>'.$project['create_date'].'</td>';
                         echo '<td align="center"><a href="/dashboard/project-details/'.$project['id'].'">View Details</td>';
                         echo '<td align="center"><a href="/dashboard/add-bill/'.$project['id'].'">Add Bill</td>';
-                        echo '<td align="center"><a href="/dashboard/add-expense/'.$project['id'].'">Add Bill</td>';
+                        echo '<td align="center"><a href="/dashboard/add-expense/'.$project['id'].'">Add Expense</td>';
                         echo '<td align="center"><a href="/dashboard/edit/'.$project['id'].'"><span class="glyphicon glyphicon-pencil text-primary"></span></a>&nbsp;&nbsp;&nbsp;<a href="/dashboard/delete/'.$project['id'].'"><span class="glyphicon glyphicon-remove text-danger"></span></a></td>';
                         echo '</tr>';
                     }

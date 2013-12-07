@@ -2,7 +2,7 @@
     <div class="col-xs-12">
         <div style="width:90%;margin: 0px auto 0;">
             <div>
-                <h1 class="text-success">Add New Projects</h1>
+                <h1 class="text-success">Add Expense</h1>
             </div>
             <div class="clearfix"></div>
             <div style="margin-top: 20px;">
@@ -13,13 +13,7 @@
                     echo '<div class="' . $msg['class'] . '"><button type="button" class="close" data-dismiss="alert">×</button>' . $msg['msg'] . '</div>';
                 }
                 ?>
-                <form class="form-horizontal" id="add_new_project" role="form" method="post" action="/dashboard/save-project">
-                    <div class="form-group">
-                        <label for="projectName" class="col-sm-2 control-label">Project Name</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="project_name" id="projectName" placeholder="Project Name">
-                        </div>
-                    </div>
+                <form class="form-horizontal" role="form" method="post" action="/dashboard/save-expense">
                     <div class="form-group">
                         <label for="date" class="col-sm-2 control-label">Date</label>
                         <div class="col-sm-10">
@@ -27,15 +21,22 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="workName" class="col-sm-2 control-label">Name Of Work</label>
+                        <label for="projectName" class="col-sm-2 control-label">Particulars</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="work_name" id="workName" placeholder="Name Of Work">
+                            <input type="text" class="form-control" name="particulars" id="particulars" placeholder="Particulars">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="workOrderAmount" class="col-sm-2 control-label">Work Order Amount</label>
+                        <label for="amount" class="col-sm-2 control-label">Amount</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="work_order_amount" id="workOrderAmount" placeholder="Work Order Amount">
+                            <input type="text" class="form-control" name="amount" id="amount" placeholder="Amount">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="workName" class="col-sm-2 control-label">Voucher No.</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="voucher_no" id="voucher_no" placeholder="Voucher No.">
+                            <input type="hidden" name="project_id" id="project_id" value="<?php echo $data['id']; ?>">
                         </div>
                     </div>
                     <div class="form-group">
@@ -51,19 +52,7 @@
     </div>
 </div>
 <script>
-    $(document).ready(function() {
-        $('#date').datepicker({
-            format: 'yyyy-mm-dd'
-        });
-        $("#add_new_project").validate({
-            rules: {
-                project_name: {required:true},
-                create_date: {required:true, date: true},
-                work_name: {required:true},
-                work_order_amount: {required:true, number: true}
-            }
-        });
-
+    $('#date').datepicker({
+        format: 'yyyy-mm-dd'
     });
-
 </script>

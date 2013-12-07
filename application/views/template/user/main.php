@@ -6,9 +6,11 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="/assets/css/bootstrap.css">
     <link rel="stylesheet" href="/assets/css/datepicker.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <script src="/assets/js/jquery-1.7.1.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
     <script src="/assets/js/bootstrap-datepicker.js"></script>
+    <script src="/assets/js/jquery.validate.js"></script>
 </head>
 <body>
 <?php echo $header; ?>
