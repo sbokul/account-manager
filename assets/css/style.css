@@ -76,3 +76,14 @@
 .twitter-typeahead {
     width: 100%;
 }
+
+@media (max-width: 767px) {
+    #big-menu {
+        display: none;
+    }
+}
+@media (min-width: 768px) {
+    #mobile-view {
+        display: none;
+    }
+}

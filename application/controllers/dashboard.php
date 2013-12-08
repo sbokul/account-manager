@@ -52,6 +52,9 @@ class Dashboard extends User_Controller
             case 'users':
                 $this->users();
                 break;
+            case 'delete':
+                $this->delete_project();
+                break;
             default:
                 $this->page_not_found();
                 break;
@@ -329,6 +332,31 @@ class Dashboard extends User_Controller
     {
         $this->load->model('dashboard_model');
         return $this->dashboard_model->check_user_exists($user_name);
+    }
+
+    public function delete_project()
+    {
+        $id = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        if ($this->dashboard_model->delete_project($id)) {
+            $msg = array(
+                'status' => false,
+                'class' => 'alert alert-success',
+                'msg' => 'Data Deleted successfully.'
+            );
+
+            $data = json_encode($msg);
+            $this->session->set_flashdata('msg', $data);
+        } else {
+            $msg = array(
+                'status' => false,
+                'class' => 'alert alert-danger',
+                'msg' => 'Problem in saving data. Please try again later.'
+            );
+
+            $data = json_encode($msg);
+            $this->session->set_flashdata('msg', $data);
+        }
+        redirect('/dashboard');
     }
 
 }

@@ -62,6 +62,7 @@ class Dashboard_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('projects');
+        $this->db->where('status', 1);
         $this->db->order_by("id", "desc");
         $this->db->limit($no_of_item, $row);
         $query = $this->db->get();
@@ -93,6 +94,7 @@ class Dashboard_model extends CI_Model
         $this->db->select('particulars');
         $this->db->from('expenses');
         $this->db->where('project_id', $project_id);
+        $this->db->group_by('particulars');
         $query = $this->db->get();
         $particulars = $query->result_array();
         return $particulars;
@@ -157,6 +159,18 @@ class Dashboard_model extends CI_Model
         $query = $this->db->get();
         $users = $query->result_array();
         return $users;
+    }
+
+    public function delete_project($id)
+    {
+        $status = false;
+        $data = array(
+            'status' => 0
+        );
+        $this->db->where('id', $id);
+        if($this->db->update('projects', $data))
+            $status = true;
+        return $status;
     }
 
 }

@@ -10,14 +10,14 @@
             </button>
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
-            <ul class="nav pull-right navbar-nav">
+            <ul class="nav pull-right navbar-nav" id="big-menu">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="projects">
                         <?php echo $data['user_info']['user_name']; ?>
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="projects">
-                        <li><a tabindex="-1" href="#">Profile</a></li>
+                        <!--<li><a tabindex="-1" href="#">Profile</a></li>-->
                         <li><a tabindex="-1" href="/login/logout">Logout</a></li>
                     </ul>
                 </li>
@@ -39,6 +39,9 @@
                     </ul>
                 </li>
                 <?php endif; ?>
+                <li id="mobile-view">
+                    <a href="/login/logout">Logout</a>
+                </li>
                 <!--<li>
                     <a href="../help/">Help</a>
                 </li>
