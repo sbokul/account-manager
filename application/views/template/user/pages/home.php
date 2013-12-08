@@ -36,7 +36,7 @@
                         echo '<tr>';
                         echo '<td>'.$project['project_name'].'</td>';
                         echo '<td>'.$project['work_name'].'</td>';
-                        echo '<td>'.$project['work_order_amount'].'</td>';
+                        echo '<td>'.number_format($project['work_order_amount'], 2).'</td>';
                         echo '<td>'.$project['create_date'].'</td>';
                         echo '<td align="center"><a href="/dashboard/project-details/'.$project['id'].'">View Details</td>';
                         echo '<td align="center"><a href="/dashboard/add-bill/'.$project['id'].'">Add Bill</td>';

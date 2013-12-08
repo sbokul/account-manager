@@ -117,6 +117,16 @@ class Dashboard_model extends CI_Model
         return $project_expense;
     }
 
+    public function get_total_particulars($particulars_name)
+    {
+        $this->db->select('*');
+        $this->db->from('expenses');
+        $this->db->where('particulars', $particulars_name);
+        $query = $this->db->get();
+        $project_particulars = $query->result_array();
+        return $project_particulars;
+    }
+
 }
 
 

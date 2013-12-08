@@ -255,4 +255,52 @@ class Dashboard extends User_Controller
 
     }
 
+    public function get_total_particulars($particulars_name)
+    {
+        $this->load->model('dashboard_model');
+        $particulars = $this->dashboard_model->get_total_particulars($particulars_name);
+        return $particulars;
+    }
+
+}
+
+if (isset($_GET['particulars'])) {
+    $dashboardObj = new Dashboard();
+    $data = $dashboardObj->get_total_particulars($_GET['particulars']);
+
+    echo '<div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Particulars</th>
+                    <th>Amount</th>
+                    <th>Voucher No.</th>
+                </tr>
+                </thead>
+                <tbody>';
+
+    $total_expense = 0;
+    foreach ($data as $expense) {
+        $total_expense = $total_expense + $expense['amount'];
+        echo '<tr>';
+        echo '<td>' . $expense['create_date'] . '</td>';
+        echo '<td>' . $expense['particulars'] . '</td>';
+        echo '<td align="right">' . number_format($expense['amount'], 2) . '</td>';
+        echo '<td>' . $expense['voucher_no'] . '</td>';
+        echo '</tr>';
+    }
+    echo '<tr>
+            <td></td>
+            <td><strong>Total</strong></td>
+            <td align="right"><strong class="text-primary">';
+    echo number_format($total_expense, 2);
+    echo '</strong></td>
+            <td></td>
+        </tr>
+        </tbody>
+        </table>
+        </div>';
+    die();
+
 }
