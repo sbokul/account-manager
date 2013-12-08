@@ -20,6 +20,16 @@ class Dashboard_model extends CI_Model
         return $status;
     }
 
+    public function save_user($post_data)
+    {
+        $status = false;
+        $post_data['user_password'] = md5($post_data['user_password']);
+        $this->db->set($post_data);
+        if($this->db->insert('users'))
+            $status = true;
+        return $status;
+    }
+
     public function user_update($userid, $data)
     {
         $status = false;

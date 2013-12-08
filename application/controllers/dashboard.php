@@ -43,6 +43,12 @@ class Dashboard extends User_Controller
             case 'project-details':
                 $this->project_details();
                 break;
+            case 'add-new-user':
+                $this->add_new_user();
+                break;
+            case 'save-user':
+                $this->save_user();
+                break;
             default:
                 $this->page_not_found();
                 break;
@@ -260,6 +266,45 @@ class Dashboard extends User_Controller
         $this->load->model('dashboard_model');
         $particulars = $this->dashboard_model->get_total_particulars($particulars_name);
         return $particulars;
+    }
+
+    public function add_new_user()
+    {
+        $this->load->helper('form');
+        $data = null;
+        $error = null;
+        $title = 'Add New User';
+        $this->load->model('dashboard_model');
+        $data = $this->session->userdata('user_info');
+        $user_id = $data['user_id'];
+        $this->template->write_view('content', 'template/user/pages/add-new-user', array('data' => $data, 'error' => $error, 'title' => $title));
+        $this->template->render();
+    }
+
+    public function save_user()
+    {
+        $post_data = $this->input->post();
+        $this->load->model('dashboard_model');
+        if ($this->dashboard_model->save_user($post_data)) {
+            $msg = array(
+                'status' => false,
+                'class' => 'alert alert-success',
+                'msg' => 'Data saved successfully.'
+            );
+
+            $data = json_encode($msg);
+            $this->session->set_flashdata('msg', $data);
+        } else {
+            $msg = array(
+                'status' => false,
+                'class' => 'alert alert-danger',
+                'msg' => 'Problem in saving data. Please try again later.'
+            );
+
+            $data = json_encode($msg);
+            $this->session->set_flashdata('msg', $data);
+        }
+        redirect('/dashboard/add-new-user');
     }
 
 }

@@ -27,16 +27,18 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="projects">Projects <span class="caret"></span></a>
                     <ul class="dropdown-menu" aria-labelledby="projects">
                         <li><a tabindex="-1" href="/dashboard">View Projects</a></li>
-                        <li><a tabindex="-1" href="/dashboard/add-new-project">Add New Project</a></li>
+                        <?php if($data['user_info']['user_type'] == 1): ?><li><a tabindex="-1" href="/dashboard/add-new-project">Add New Project</a></li><?php endif; ?>
                     </ul>
                 </li>
+                <?php if($data['user_info']['user_type'] == 1): ?>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="users">Users <span class="caret"></span></a>
                     <ul class="dropdown-menu" aria-labelledby="users">
                         <li><a tabindex="-1" href="./bootstrap.min.css">User List</a></li>
-                        <li><a tabindex="-1" href="./bootstrap.min.css">Add New User</a></li>
+                        <li><a tabindex="-1" href="/dashboard/add-new-user">Add New User</a></li>
                     </ul>
                 </li>
+                <?php endif; ?>
                 <!--<li>
                     <a href="../help/">Help</a>
                 </li>
