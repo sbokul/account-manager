@@ -34,7 +34,7 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="users">Users <span class="caret"></span></a>
                     <ul class="dropdown-menu" aria-labelledby="users">
-                        <li><a tabindex="-1" href="./bootstrap.min.css">User List</a></li>
+                        <li><a tabindex="-1" href="/dashboard/users">User List</a></li>
                         <li><a tabindex="-1" href="/dashboard/add-new-user">Add New User</a></li>
                     </ul>
                 </li>

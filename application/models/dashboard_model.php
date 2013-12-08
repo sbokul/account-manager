@@ -24,6 +24,7 @@ class Dashboard_model extends CI_Model
     {
         $status = false;
         $post_data['user_password'] = md5($post_data['user_password']);
+        $post_data['create_date'] = date('Y-m-d');
         $this->db->set($post_data);
         if($this->db->insert('users'))
             $status = true;
@@ -147,6 +148,15 @@ class Dashboard_model extends CI_Model
         if ($query->num_rows() > 0)
             $status = false;
         return $status;
+    }
+
+    public function get_users()
+    {
+        $this->db->select('*');
+        $this->db->from('users');
+        $query = $this->db->get();
+        $users = $query->result_array();
+        return $users;
     }
 
 }

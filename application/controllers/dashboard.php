@@ -49,6 +49,9 @@ class Dashboard extends User_Controller
             case 'save-user':
                 $this->save_user();
                 break;
+            case 'users':
+                $this->users();
+                break;
             default:
                 $this->page_not_found();
                 break;
@@ -257,6 +260,21 @@ class Dashboard extends User_Controller
         $data['project_expense'] = $this->dashboard_model->get_project_expense($id);
 
         $this->template->write_view('content', 'template/user/pages/project-detail', array('data' => $data, 'error' => $error, 'title' => $title));
+        $this->template->render();
+
+    }
+
+    public function users()
+    {
+        $data = null;
+        $error = null;
+        $title = 'Users';
+        $this->load->model('dashboard_model');
+        $data = $this->session->userdata('user_info');
+
+        $data['users'] = $this->dashboard_model->get_users();
+
+        $this->template->write_view('content', 'template/user/pages/users', array('data' => $data, 'error' => $error, 'title' => $title));
         $this->template->render();
 
     }
