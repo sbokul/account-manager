@@ -13,7 +13,7 @@
                     echo '<div class="' . $msg['class'] . '"><button type="button" class="close" data-dismiss="alert">×</button>' . $msg['msg'] . '</div>';
                 }
                 ?>
-                <form class="form-horizontal" id="add_new_project" role="form" method="post" action="/dashboard/save-user">
+                <form class="form-horizontal" id="add_new_user" role="form" method="post" action="/dashboard/save-user">
                     <div class="form-group">
                         <label for="user_full_name" class="col-sm-2 control-label">Name</label>
                         <div class="col-sm-10">
@@ -47,7 +47,7 @@
                     <div class="form-group">
                         <label for="user_password" class="col-sm-2 control-label">Password</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="user_password" id="user_password" placeholder="Password">
+                            <input type="password" class="form-control" name="user_password" id="user_password" placeholder="Password">
                         </div>
                     </div>
                     <div class="form-group">
@@ -63,4 +63,21 @@
     </div>
 </div>
 <script>
+    $(document).ready(function() {
+
+        $("#add_new_user").validate({
+            rules: {
+                user_full_name: {required:true},
+                user_name: {required:true, minlength:4, remote:"/dashboard" },
+                email: {required:true, email:true},
+                user_password: { required:true, maxlength: 32 }
+            },
+            messages:{
+                user_full_name:{ required:"Please Enter Name"},
+                user_name:{ required:"Please Enter User Name",remote:"User Name Already Taken"},
+                user_password:{ required:"Please Enter Password"}
+            }
+        });
+
+    });
 </script>

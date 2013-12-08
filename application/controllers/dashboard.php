@@ -307,6 +307,12 @@ class Dashboard extends User_Controller
         redirect('/dashboard/add-new-user');
     }
 
+    public function check_username_is_used($user_name)
+    {
+        $this->load->model('dashboard_model');
+        return $this->dashboard_model->check_user_exists($user_name);
+    }
+
 }
 
 if (isset($_GET['particulars'])) {
@@ -348,4 +354,14 @@ if (isset($_GET['particulars'])) {
         </div>';
     die();
 
+}
+
+if (isset($_GET['user_name'])) {
+    $dashboardObj = new Dashboard();
+    $status = $dashboardObj->check_username_is_used($_GET['user_name']);
+    if ($status == true)
+        echo 'true';
+    else
+        echo 'false';
+    die();
 }

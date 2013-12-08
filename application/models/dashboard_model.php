@@ -137,6 +137,18 @@ class Dashboard_model extends CI_Model
         return $project_particulars;
     }
 
+    public function check_user_exists($user_name)
+    {
+        $status = true;
+        $conditional_array = array(
+            'user_name' => $user_name
+        );
+        $query = $this->db->get_where('users', $conditional_array);
+        if ($query->num_rows() > 0)
+            $status = false;
+        return $status;
+    }
+
 }
 
 
