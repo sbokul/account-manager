@@ -91,7 +91,7 @@
                             echo '<td>'.$expense['voucher_no'].'</td>';
                             echo '<td>
                                     <a href="/dashboard/modify-expense/'.$expense['id'].'" title="Edit/Modify"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
-                                    <a href="/dashboard/delete-expense/'.$expense['id'].'" title="Remove"><span class="glyphicon glyphicon-remove text-danger"></span></a>
+                                    <a href="/dashboard/delete-expense/'.$expense['id'].'/'.$data['id'].'" title="Remove"><span class="glyphicon glyphicon-remove text-danger"></span></a>
                                   </td>';
                             echo '</tr>';
                         }
