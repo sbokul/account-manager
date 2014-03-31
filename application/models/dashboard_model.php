@@ -115,9 +115,29 @@ class Dashboard_model extends CI_Model
         $this->db->select('*');
         $this->db->from('bills');
         $this->db->where('project_id', $id);
+        $this->db->order_by("voucher_no", "asc");
         $query = $this->db->get();
         $project_bill = $query->result_array();
         return $project_bill;
+    }
+
+    public function get_bill_data($id)
+    {
+        $this->db->select('*');
+        $this->db->from('bills');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+        $bill_details = $query->result_array();
+        return $bill_details[0];
+    }
+
+    public function update_bill($data, $id)
+    {
+        $status = false;
+        $this->db->where('id', $id);
+        if($this->db->update('bills', $data))
+            $status = true;
+        return $status;
     }
 
     public function get_project_expense($id)
@@ -125,6 +145,7 @@ class Dashboard_model extends CI_Model
         $this->db->select('*');
         $this->db->from('expenses');
         $this->db->where('project_id', $id);
+        $this->db->order_by("voucher_no", "asc");
         $query = $this->db->get();
         $project_expense = $query->result_array();
         return $project_expense;

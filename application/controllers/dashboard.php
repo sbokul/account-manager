@@ -55,6 +55,12 @@ class Dashboard extends User_Controller
             case 'delete':
                 $this->delete_project();
                 break;
+            case 'modify-bill':
+                $this->modify_bill();
+                break;
+            case 'modify-bill-save':
+                $this->modify_bill_save();
+                break;
             default:
                 $this->page_not_found();
                 break;
@@ -265,6 +271,61 @@ class Dashboard extends User_Controller
         $this->template->write_view('content', 'template/user/pages/project-detail', array('data' => $data, 'error' => $error, 'title' => $title));
         $this->template->render();
 
+    }
+
+    public function modify_bill()
+    {
+        $id = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        if($id == 0) {
+            redirect('/dashboard');
+        }
+        $this->load->helper('form');
+        $this->load->model('dashboard_model');
+        $data = null;
+        $error = null;
+        $title = 'Modify Bill';
+        $this->load->model('dashboard_model');
+        $data = $this->session->userdata('user_info');
+        $data['id'] = $id;
+        $user_id = $data['user_id'];
+
+        $data['bill_data'] = $this->dashboard_model->get_bill_data($id);
+
+        $this->template->write_view('content', 'template/user/pages/modify-bill', array('data' => $data, 'error' => $error, 'title' => $title));
+        $this->template->render();
+    }
+
+    public function modify_bill_save()
+    {
+        $post_data = $this->input->post();
+        $id = $post_data['id'];
+        $update_data = array(
+            'create_date' => $post_data['create_date'],
+            'particulars' => $post_data['particulars'],
+            'amount' => $post_data['amount'],
+            'voucher_no' => $post_data['voucher_no'],
+        );
+        $this->load->model('dashboard_model');
+        if ($this->dashboard_model->update_bill($update_data, $id)) {
+            $msg = array(
+                'status' => false,
+                'class' => 'alert alert-success',
+                'msg' => 'Data updated successfully.'
+            );
+
+            $data = json_encode($msg);
+            $this->session->set_flashdata('msg', $data);
+        } else {
+            $msg = array(
+                'status' => false,
+                'class' => 'alert alert-danger',
+                'msg' => 'Problem in saving data. Please try again later.'
+            );
+
+            $data = json_encode($msg);
+            $this->session->set_flashdata('msg', $data);
+        }
+        redirect('/dashboard/modify-bill/'.$id);
     }
 
     public function users()

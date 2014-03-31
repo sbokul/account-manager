@@ -37,6 +37,7 @@
                             <th>Particulars</th>
                             <th>Amount</th>
                             <th>Voucher No.</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -49,6 +50,10 @@
                             echo '<td>'.$bill['particulars'].'</td>';
                             echo '<td align="right">'.number_format($bill['amount'], 2).'</td>';
                             echo '<td>'.$bill['voucher_no'].'</td>';
+                            echo '<td>
+                                    <a href="/dashboard/modify-bill/'.$bill['id'].'" title="Edit/Modify"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
+                                    <a href="/dashboard/delete-bill/'.$bill['id'].'" title="Remove"><span class="glyphicon glyphicon-remove text-danger"></span></a>
+                                  </td>';
                             echo '</tr>';
                         }
                         ?>
@@ -71,6 +76,7 @@
                             <th>Particulars</th>
                             <th>Amount</th>
                             <th>Voucher No.</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -83,6 +89,10 @@
                             echo '<td><a class="particulars" href="#">'.$expense['particulars'].'</a></td>';
                             echo '<td align="right">'.number_format($expense['amount'], 2).'</td>';
                             echo '<td>'.$expense['voucher_no'].'</td>';
+                            echo '<td>
+                                    <a href="/dashboard/modify-expense/'.$expense['id'].'" title="Edit/Modify"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
+                                    <a href="/dashboard/delete-expense/'.$expense['id'].'" title="Remove"><span class="glyphicon glyphicon-remove text-danger"></span></a>
+                                  </td>';
                             echo '</tr>';
                         }
                         ?>
