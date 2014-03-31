@@ -194,6 +194,15 @@ class Dashboard_model extends CI_Model
         return $status;
     }
 
+    public function delete_bill($bill_id)
+    {
+        $status = false;
+        $this->db->where('id', $bill_id);
+        if($this->db->delete('bills'))
+            $status = true;
+        return $status;
+    }
+
 }
 
 

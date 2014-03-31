@@ -61,6 +61,9 @@ class Dashboard extends User_Controller
             case 'modify-bill-save':
                 $this->modify_bill_save();
                 break;
+            case 'delete-bill':
+                $this->delete_bill();
+                break;
             default:
                 $this->page_not_found();
                 break;
@@ -326,6 +329,36 @@ class Dashboard extends User_Controller
             $this->session->set_flashdata('msg', $data);
         }
         redirect('/dashboard/modify-bill/'.$id);
+    }
+
+    public function delete_bill()
+    {
+        $bill_id = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $project_id = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+        if($bill_id == 0) {
+            redirect('/dashboard');
+        }
+
+        if ($this->dashboard_model->delete_bill($bill_id)) {
+            $msg = array(
+                'status' => false,
+                'class' => 'alert alert-success',
+                'msg' => 'Data Deleted successfully.'
+            );
+
+            $data = json_encode($msg);
+            $this->session->set_flashdata('msg', $data);
+        } else {
+            $msg = array(
+                'status' => false,
+                'class' => 'alert alert-danger',
+                'msg' => 'Problem in saving data. Please try again later.'
+            );
+
+            $data = json_encode($msg);
+            $this->session->set_flashdata('msg', $data);
+        }
+        redirect('/dashboard/project-details/'.$project_id);
     }
 
     public function users()

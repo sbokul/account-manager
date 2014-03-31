@@ -52,7 +52,7 @@
                             echo '<td>'.$bill['voucher_no'].'</td>';
                             echo '<td>
                                     <a href="/dashboard/modify-bill/'.$bill['id'].'" title="Edit/Modify"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
-                                    <a href="/dashboard/delete-bill/'.$bill['id'].'" title="Remove"><span class="glyphicon glyphicon-remove text-danger"></span></a>
+                                    <a href="/dashboard/delete-bill/'.$bill['id'].'/'.$data['id'].'" title="Remove"><span class="glyphicon glyphicon-remove text-danger"></span></a>
                                   </td>';
                             echo '</tr>';
                         }
