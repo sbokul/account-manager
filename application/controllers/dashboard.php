@@ -64,6 +64,18 @@ class Dashboard extends User_Controller
             case 'delete-bill':
                 $this->delete_bill();
                 break;
+            case 'modify-expense':
+                $this->modify_expense();
+                break;
+            case 'modify-expense-save':
+                $this->modify_expense_save();
+                break;
+            case 'delete-expense':
+                $this->delete_expense();
+                break;
+            case 'export-excel':
+                $this->export_excel();
+                break;
             default:
                 $this->page_not_found();
                 break;
@@ -276,6 +288,36 @@ class Dashboard extends User_Controller
 
     }
 
+    public function export_excel()
+    {
+        $id = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        if($id == 0) {
+            redirect('/dashboard');
+        }
+        $data = null;
+        $error = null;
+        $title = 'Project Detail';
+        $this->load->model('dashboard_model');
+        $data = $this->session->userdata('user_info');
+        $data['id'] = $id;
+
+        $data['project_detail'] = $this->dashboard_model->get_project_detail($id);
+
+        $data['project_bill'] = $this->dashboard_model->get_project_bill($id);
+
+        $data['project_expense'] = $this->dashboard_model->get_project_expense($id);
+
+        $total_expense = 0;
+        foreach ($data['project_expense'] as $expense) {
+            $total_expense = $total_expense + $expense['amount'];
+        }
+        $data['total_expense'] = $total_expense;
+
+        $this->load->view('template/user/pages/export-excel', $data);
+        //$this->template->write_view('content', 'template/user/pages/export-excel', array('data' => $data, 'error' => $error, 'title' => $title));
+        //$this->template->render();
+    }
+
     public function modify_bill()
     {
         $id = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
@@ -360,6 +402,92 @@ class Dashboard extends User_Controller
         }
         redirect('/dashboard/project-details/'.$project_id);
     }
+
+    public function modify_expense()
+    {
+        $id = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        if($id == 0) {
+            redirect('/dashboard');
+        }
+        $this->load->helper('form');
+        $this->load->model('dashboard_model');
+        $data = null;
+        $error = null;
+        $title = 'Modify Expense';
+        $this->load->model('dashboard_model');
+        $data = $this->session->userdata('user_info');
+        $data['id'] = $id;
+        $user_id = $data['user_id'];
+
+        $data['expense_data'] = $this->dashboard_model->get_expense_data($id);
+
+        $this->template->write_view('content', 'template/user/pages/modify-expense', array('data' => $data, 'error' => $error, 'title' => $title));
+        $this->template->render();
+    }
+
+    public function modify_expense_save()
+    {
+        $post_data = $this->input->post();
+        $id = $post_data['id'];
+        $update_data = array(
+            'create_date' => $post_data['create_date'],
+            'particulars' => $post_data['particulars'],
+            'amount' => $post_data['amount'],
+            'voucher_no' => $post_data['voucher_no'],
+        );
+        $this->load->model('dashboard_model');
+        if ($this->dashboard_model->update_expense($update_data, $id)) {
+            $msg = array(
+                'status' => false,
+                'class' => 'alert alert-success',
+                'msg' => 'Data updated successfully.'
+            );
+
+            $data = json_encode($msg);
+            $this->session->set_flashdata('msg', $data);
+        } else {
+            $msg = array(
+                'status' => false,
+                'class' => 'alert alert-danger',
+                'msg' => 'Problem in saving data. Please try again later.'
+            );
+
+            $data = json_encode($msg);
+            $this->session->set_flashdata('msg', $data);
+        }
+        redirect('/dashboard/modify-expense/'.$id);
+    }
+
+    public function delete_expense()
+    {
+        $expense_id = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $project_id = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+        if($expense_id == 0) {
+            redirect('/dashboard');
+        }
+
+        if ($this->dashboard_model->delete_expense($expense_id)) {
+            $msg = array(
+                'status' => false,
+                'class' => 'alert alert-success',
+                'msg' => 'Data Deleted successfully.'
+            );
+
+            $data = json_encode($msg);
+            $this->session->set_flashdata('msg', $data);
+        } else {
+            $msg = array(
+                'status' => false,
+                'class' => 'alert alert-danger',
+                'msg' => 'Problem in saving data. Please try again later.'
+            );
+
+            $data = json_encode($msg);
+            $this->session->set_flashdata('msg', $data);
+        }
+        redirect('/dashboard/project-details/'.$project_id);
+    }
+
 
     public function users()
     {

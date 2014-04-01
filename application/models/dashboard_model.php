@@ -131,11 +131,30 @@ class Dashboard_model extends CI_Model
         return $bill_details[0];
     }
 
+    public function get_expense_data($id)
+    {
+        $this->db->select('*');
+        $this->db->from('expenses');
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+        $expense_details = $query->result_array();
+        return $expense_details[0];
+    }
+
     public function update_bill($data, $id)
     {
         $status = false;
         $this->db->where('id', $id);
         if($this->db->update('bills', $data))
+            $status = true;
+        return $status;
+    }
+
+    public function update_expense($data, $id)
+    {
+        $status = false;
+        $this->db->where('id', $id);
+        if($this->db->update('expenses', $data))
             $status = true;
         return $status;
     }
@@ -199,6 +218,15 @@ class Dashboard_model extends CI_Model
         $status = false;
         $this->db->where('id', $bill_id);
         if($this->db->delete('bills'))
+            $status = true;
+        return $status;
+    }
+
+    public function delete_expense($expense_id)
+    {
+        $status = false;
+        $this->db->where('id', $expense_id);
+        if($this->db->delete('expenses'))
             $status = true;
         return $status;
     }

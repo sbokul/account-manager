@@ -30,8 +30,9 @@
                         <?php if($data['user_type'] == 1): ?>
                         <th>Add Bill</th>
                         <th>Add Expense</th>
-                        <th>Action</th>
+                        <!--<th>Action</th>-->
                         <?php endif; ?>
+                        <th>Export</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -47,8 +48,9 @@
                         echo '<td align="center"><a href="/dashboard/add-bill/'.$project['id'].'">Add Bill</td>';
                         echo '<td align="center"><a href="/dashboard/add-expense/'.$project['id'].'">Add Expense</td>';
                         //echo '<td align="center"><a href="/dashboard/edit/'.$project['id'].'"><span class="glyphicon glyphicon-pencil text-primary"></span></a>&nbsp;&nbsp;&nbsp;<a href="/dashboard/delete/'.$project['id'].'"><span class="glyphicon glyphicon-remove text-danger"></span></a></td>';
-                        echo '<td align="center"><a href="/dashboard/delete/'.$project['id'].'" title="Delete"><span class="glyphicon glyphicon-remove text-danger"></span></a></td>';
+                        //echo '<td align="center"><a href="/dashboard/delete/'.$project['id'].'" title="Delete"><span class="glyphicon glyphicon-remove text-danger"></span></a></td>';
                         endif;
+                        echo '<td align="center"><a href="/dashboard/export-excel/'.$project['id'].'" title="Export as Excel">Export as Excel</a></td>';
                         echo '</tr>';
                     }
 
