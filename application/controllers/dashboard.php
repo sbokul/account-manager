@@ -283,6 +283,12 @@ class Dashboard extends User_Controller
 
         $data['project_expense'] = $this->dashboard_model->get_project_expense($id);
 
+        $total_expense = 0;
+        foreach ($data['project_expense'] as $expense) {
+            $total_expense = $total_expense + $expense['amount'];
+        }
+        $data['total_expense'] = $total_expense;
+
         $this->template->write_view('content', 'template/user/pages/project-detail', array('data' => $data, 'error' => $error, 'title' => $title));
         $this->template->render();
 
@@ -432,6 +438,7 @@ class Dashboard extends User_Controller
         $update_data = array(
             'create_date' => $post_data['create_date'],
             'particulars' => $post_data['particulars'],
+            'reference' => $post_data['reference'],
             'amount' => $post_data['amount'],
             'voucher_no' => $post_data['voucher_no'],
         );

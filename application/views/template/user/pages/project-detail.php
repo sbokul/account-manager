@@ -26,6 +26,14 @@
                         <td><strong>Work Order Amount</strong></td>
                         <td><strong class="text-primary"><?php echo number_format($data['project_detail']['work_order_amount'], 2); ?></strong></td>
                     </tr>
+                    <tr>
+                        <td><strong>Total Expense</strong></td>
+                        <td><strong><?php echo number_format($data['total_expense'], 2); ?></strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Profit</strong></td>
+                        <td><strong><?php echo number_format(($data['project_detail']['work_order_amount'] - $data['total_expense']), 2); ?></strong></td>
+                    </tr>
                 </table>
             </div>
             <div style="width: 49%;float: left;">
@@ -50,10 +58,12 @@
                             echo '<td>'.$bill['particulars'].'</td>';
                             echo '<td align="right">'.number_format($bill['amount'], 2).'</td>';
                             echo '<td>'.$bill['voucher_no'].'</td>';
+                            if($data['user_type'] == 1):
                             echo '<td>
                                     <a href="/dashboard/modify-bill/'.$bill['id'].'" title="Edit/Modify"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
                                     <a href="/dashboard/delete-bill/'.$bill['id'].'/'.$data['id'].'" title="Remove"><span class="glyphicon glyphicon-remove text-danger"></span></a>
                                   </td>';
+                            endif;
                             echo '</tr>';
                         }
                         ?>
@@ -74,6 +84,7 @@
                         <tr>
                             <th>Date</th>
                             <th>Particulars</th>
+                            <th>Reference</th>
                             <th>Amount</th>
                             <th>Voucher No.</th>
                             <th>Action</th>
@@ -87,12 +98,15 @@
                             echo '<tr>';
                             echo '<td>'.$expense['create_date'].'</td>';
                             echo '<td><a class="particulars" href="#">'.$expense['particulars'].'</a></td>';
+                            echo '<td>'.$expense['reference'].'</td>';
                             echo '<td align="right">'.number_format($expense['amount'], 2).'</td>';
                             echo '<td>'.$expense['voucher_no'].'</td>';
+                            if($data['user_type'] == 1):
                             echo '<td>
                                     <a href="/dashboard/modify-expense/'.$expense['id'].'" title="Edit/Modify"><span class="glyphicon glyphicon-edit"></span></a>&nbsp;
                                     <a href="/dashboard/delete-expense/'.$expense['id'].'/'.$data['id'].'" title="Remove"><span class="glyphicon glyphicon-remove text-danger"></span></a>
                                   </td>';
+                            endif;
                             echo '</tr>';
                         }
                         ?>

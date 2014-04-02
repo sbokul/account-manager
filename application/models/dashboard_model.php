@@ -115,7 +115,7 @@ class Dashboard_model extends CI_Model
         $this->db->select('*');
         $this->db->from('bills');
         $this->db->where('project_id', $id);
-        $this->db->order_by("voucher_no", "asc");
+        $this->db->order_by("create_date", "asc");
         $query = $this->db->get();
         $project_bill = $query->result_array();
         return $project_bill;
@@ -164,7 +164,7 @@ class Dashboard_model extends CI_Model
         $this->db->select('*');
         $this->db->from('expenses');
         $this->db->where('project_id', $id);
-        $this->db->order_by("voucher_no", "asc");
+        $this->db->order_by("create_date", "asc");
         $query = $this->db->get();
         $project_expense = $query->result_array();
         return $project_expense;

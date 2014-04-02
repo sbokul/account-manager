@@ -21,6 +21,12 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="reference" class="col-sm-2 control-label">Reference</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control typeahead" name="reference" id="reference" placeholder="Reference" value="<?php echo $data['expense_data']['reference']; ?>">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="date" class="col-sm-2 control-label">Date</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="create_date" id="date" placeholder="Date" value="<?php echo $data['expense_data']['create_date']; ?>">
