@@ -127,7 +127,7 @@
 <script>
     $('.particulars').click(function() {
         //alert(this.text);
-        $.get( "/dashboard", { particulars: this.text }, function( data ) {
+        $.get( "/dashboard", { particulars: this.text, project_id: <?php echo $data['id']; ?> }, function( data ) {
             $( ".result" ).html( data );
             //alert( data );
         });

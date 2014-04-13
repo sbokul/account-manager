@@ -511,10 +511,10 @@ class Dashboard extends User_Controller
 
     }
 
-    public function get_total_particulars($particulars_name)
+    public function get_total_particulars($particulars_name, $project_id)
     {
         $this->load->model('dashboard_model');
-        $particulars = $this->dashboard_model->get_total_particulars($particulars_name);
+        $particulars = $this->dashboard_model->get_total_particulars($particulars_name, $project_id);
         return $particulars;
     }
 
@@ -590,9 +590,9 @@ class Dashboard extends User_Controller
 
 }
 
-if (isset($_GET['particulars'])) {
+if (isset($_GET['particulars']) && isset($_GET['project_id'])) {
     $dashboardObj = new Dashboard();
-    $data = $dashboardObj->get_total_particulars($_GET['particulars']);
+    $data = $dashboardObj->get_total_particulars($_GET['particulars'], $_GET['project_id']);
 
     echo '<div class="table-responsive">
             <table class="table table-bordered">
