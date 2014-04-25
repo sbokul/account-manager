@@ -26,12 +26,16 @@ header("Expires: 0");
                         <td><strong class="text-primary"><?php echo number_format($project_detail['work_order_amount'], 2); ?></strong></td>
                     </tr>
                     <tr>
+                        <td><strong>Total Bill</strong></td>
+                        <td><strong><?php echo number_format($total_bill, 2); ?></strong></td>
+                    </tr>
+                    <tr>
                         <td><strong>Total Expense</strong></td>
                         <td><strong><?php echo number_format($total_expense, 2); ?></strong></td>
                     </tr>
                     <tr>
                         <td><strong>Profit</strong></td>
-                        <td><strong><?php echo number_format(($project_detail['work_order_amount'] - $total_expense), 2); ?></strong></td>
+                        <td><strong><?php echo number_format(($total_bill - $total_expense), 2); ?></strong></td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>

@@ -283,6 +283,12 @@ class Dashboard extends User_Controller
 
         $data['project_expense'] = $this->dashboard_model->get_project_expense($id);
 
+        $total_bill = 0;
+        foreach($data['project_bill'] as $bill) {
+            $total_bill = $total_bill + $bill['amount'];
+        }
+        $data['total_bill'] = $total_bill;
+
         $total_expense = 0;
         foreach ($data['project_expense'] as $expense) {
             $total_expense = $total_expense + $expense['amount'];
@@ -312,6 +318,12 @@ class Dashboard extends User_Controller
         $data['project_bill'] = $this->dashboard_model->get_project_bill($id);
 
         $data['project_expense'] = $this->dashboard_model->get_project_expense($id);
+
+        $total_bill = 0;
+        foreach($data['project_bill'] as $bill) {
+            $total_bill = $total_bill + $bill['amount'];
+        }
+        $data['total_bill'] = $total_bill;
 
         $total_expense = 0;
         foreach ($data['project_expense'] as $expense) {

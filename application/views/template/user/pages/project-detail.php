@@ -27,12 +27,16 @@
                         <td><strong class="text-primary"><?php echo number_format($data['project_detail']['work_order_amount'], 2); ?></strong></td>
                     </tr>
                     <tr>
+                        <td><strong>Total Bill</strong></td>
+                        <td><strong><?php echo number_format($data['total_bill'], 2); ?></strong></td>
+                    </tr>
+                    <tr>
                         <td><strong>Total Expense</strong></td>
                         <td><strong><?php echo number_format($data['total_expense'], 2); ?></strong></td>
                     </tr>
                     <tr>
                         <td><strong>Profit</strong></td>
-                        <td><strong><?php echo number_format(($data['project_detail']['work_order_amount'] - $data['total_expense']), 2); ?></strong></td>
+                        <td><strong><?php echo number_format(($data['total_bill'] - $data['total_expense']), 2); ?></strong></td>
                     </tr>
                 </table>
             </div>
