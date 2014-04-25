@@ -76,6 +76,9 @@ class Dashboard extends User_Controller
             case 'export-excel':
                 $this->export_excel();
                 break;
+            case 'export-excel-particulars':
+                $this->export_excel_particulars();
+                break;
             default:
                 $this->page_not_found();
                 break;
@@ -334,6 +337,16 @@ class Dashboard extends User_Controller
         $this->load->view('template/user/pages/export-excel', $data);
         //$this->template->write_view('content', 'template/user/pages/export-excel', array('data' => $data, 'error' => $error, 'title' => $title));
         //$this->template->render();
+    }
+
+    public function export_excel_particulars()
+    {
+        $particulars = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+        $project_id = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
+        $data['particulars'] = $this->get_total_particulars(base64_decode($particulars), $project_id);
+
+        $this->load->view('template/user/pages/export-excel-particulars', $data);
+
     }
 
     public function modify_bill()
@@ -605,7 +618,7 @@ class Dashboard extends User_Controller
 if (isset($_GET['particulars']) && isset($_GET['project_id'])) {
     $dashboardObj = new Dashboard();
     $data = $dashboardObj->get_total_particulars($_GET['particulars'], $_GET['project_id']);
-
+    echo '<div style="margin-bottom: 10px;"><a href="/dashboard/export-excel-particulars/'.base64_encode($_GET['particulars']).'/'.$_GET['project_id'].'">Export As Excel</a></div>';
     echo '<div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
